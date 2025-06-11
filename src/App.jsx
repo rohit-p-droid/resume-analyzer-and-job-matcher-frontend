@@ -1,10 +1,12 @@
-function App() {
-  const [count, setCount] = useState(0)
+import { Outlet } from "react-router-dom";
+import config from "./config/config"
 
+function App() {
+  const apiUrl = config.API_URL;
   return (
     <>
-      <div className="text-center">
-      <h1>Smart Resume Analyzer & Job Matcher</h1>
+      <div>
+        <Outlet />
       </div>
     </>
   )
