@@ -1,12 +1,21 @@
 import { Outlet } from "react-router-dom";
-import config from "./config/config"
+import { Header } from "./components";
+import { useSelector } from "react-redux"
+import { useEffect } from "react";
 
 function App() {
-  const apiUrl = config.API_URL;
+  const theme = useSelector((state) => state.theme.mode);
+
+  useEffect(() => {
+    document.querySelector("html").classList.remove("dark", "light");
+    document.querySelector("html").classList.add(theme);
+  }, [theme])
   return (
     <>
       <div>
-        <Outlet />
+        <Header>
+          <Outlet />
+        </Header>
       </div>
     </>
   )
