@@ -27,6 +27,7 @@ const Register = () => {
             })
             
             if(res.statusCode == 400) {
+                setError(res.message);
                 setServerValidationErrors(res.errors);
             }
 

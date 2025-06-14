@@ -1,8 +1,9 @@
 import React from 'react'
-const AuthLayout = ({ children }) => {
+import { Outlet } from 'react-router-dom'
+const AuthLayout = () => {
   return (
     <>
-      {children}
+      <Outlet />
     </>
   )
 }

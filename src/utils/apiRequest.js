@@ -9,7 +9,7 @@ export async function apiRequest({
     try {
         const options = {
             method: method,
-            credentails: "include",
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json",
                 ...headers,
@@ -20,10 +20,23 @@ export async function apiRequest({
             options.body = JSON.stringify(data);
         }
 
-        const fullUrl = `${config.API_URL}${url}`;
-        console.log(fullUrl)
+        const response = await fetch(`${config.API_URL}${url}`, options);
 
-        const response = await fetch(fullUrl, options)
+        // if the token is expired refresh the token and send response
+        if(response.status == 401) {
+            console.log("Token expired getting new token");
+            await fetch(`${config.API_URL}/auth/refresh-token`, {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                    ...headers,
+                },
+            });
+
+            const response = await fetch(`${config.API_URL}${url}`, options);
+            return response.json();
+        }
 
         return response.json();
     } catch (error) {

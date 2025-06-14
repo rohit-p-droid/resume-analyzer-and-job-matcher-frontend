@@ -1,13 +1,28 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { toggleTheme } from '../../reducers';
+import { logout, toggleTheme } from '../../reducers';
 import { FaMoon, FaSun } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { apiRequest } from '../../utils/apiRequest';
 
 const Header = ({ children }) => {
     const dispatch = useDispatch();
     const theme = useSelector((state) => state.theme.mode);
     const authStatus = useSelector((state) => state.auth.status);
+
+    const navigate = useNavigate();
+
+    const logoutHandler = async () => {
+        const res = await apiRequest({
+            url: "/auth/logout",
+            method: "POST"
+        });
+
+        if(res.statusCode == 200) {
+            dispatch(logout());
+            navigate("/login");
+        }
+    }
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     return (
@@ -33,7 +48,12 @@ const Header = ({ children }) => {
                                 <Link to="/register"><button className="px-4 py-1 rounded border border-blue-600 text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white transition">Register</button></Link>
                             </> :
                             <>
-                                <button className="px-4 py-1 rounded bg-blue-600 text-white hover:bg-blue-700 transition">Logout</button>
+                                <button
+                                    className="px-4 py-1 rounded bg-blue-600 text-white hover:bg-blue-700 transition"
+                                    onClick={logoutHandler}
+                                >
+                                    Logout
+                                </button>
                             </>
 
                         }
@@ -70,7 +90,7 @@ const Header = ({ children }) => {
                                     <Link to="/register"><button className="px-4 py-1 rounded border border-blue-600 text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white">Register</button></Link>
                                 </> :
                                 <>
-                                    <button className="px-4 py-1 rounded bg-blue-600 text-white hover:bg-blue-700">Logout</button>
+
                                 </>
                             }
                         </div>
@@ -84,7 +104,7 @@ const Header = ({ children }) => {
                     </div>
                 }
             </header>
-            <div className='py-15'>
+            <div className='pt-15'>
                 {children}
             </div>
         </div>

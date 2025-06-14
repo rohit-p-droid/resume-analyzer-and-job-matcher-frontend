@@ -7,6 +7,8 @@ import Login from "./Login";
 import Header from "./header/Header";
 import AuthLayout from "./AuthLayout";
 import Footer from "./footer/Footer";
+import ResumeDetails from "./ResumeDetails";
+import ResumeUploadBtn from "./ResumeUploadBtn";
 
 export {
     Input,
@@ -18,4 +20,6 @@ export {
     Header,
     AuthLayout,
     Footer,
+    ResumeDetails,
+    ResumeUploadBtn
 }

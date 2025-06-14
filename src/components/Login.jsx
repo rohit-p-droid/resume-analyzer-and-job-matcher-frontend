@@ -3,8 +3,10 @@ import { loginSchema } from '../formValidations';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Input, Button, Toaster, PasswordInput } from './';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { apiRequest } from '../utils/apiRequest';
+import { useDispatch } from 'react-redux';
+import { login } from '../reducers';
 
 const Login = () => {
 
@@ -15,6 +17,9 @@ const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(loginSchema)
   });
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const loginHandler = async (data) => {
     setError("");
@@ -28,11 +33,14 @@ const Login = () => {
       })
 
       if (res.statusCode == 400) {
+        setError(res.message);
         setServerValidationErrors(res.errors);
       }
 
       if (res.statusCode == 200) {
         setSuccessMessage(res.message);
+        dispatch(login(res.data.user));
+        navigate("/");
       }
 
     } catch (error) {
