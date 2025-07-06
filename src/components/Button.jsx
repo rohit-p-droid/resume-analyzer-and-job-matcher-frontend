@@ -2,15 +2,16 @@ import React from 'react'
 
 const Button = ({
     label,
+    children,
     className = "",
     ...props
 }) => {
     return (
         <button
-            className={`w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition ${className}`}
+            className={`w-full p-3 bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition ${className}`}
             {...props}
         >
-            {label}
+            {label} {children}
         </button>
     )
 }

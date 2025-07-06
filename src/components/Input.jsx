@@ -2,16 +2,22 @@ import React, { useId } from 'react'
 
 const Input = ({
     label,
+    labelClass="",
     type = "text",
     className = "",
-    validationError="",
+    validationError = "",
+    required = true,
     ...props
 }, ref) => {
     const id = useId();
     return (
         <>
             <div>
-                {label && <label htmlFor={id} className="block text-sm font-medium text-gray-700 dark:text-gray-300">{label}</label>}
+                {label &&
+                    <label htmlFor={id} className={`block text-sm font-medium text-gray-700 dark:text-gray-300 ${labelClass}`}>
+                        {label}&nbsp;{required && <span className='text-red-600'>*</span>}
+                    </label>
+                }
                 <input
                     type={type}
                     id={id}

@@ -6,6 +6,7 @@ const PasswordInput = ({
     type = "password",
     className,
     validationError="",
+    required=true,
     ...props
 }, ref) => {
     const [visible, setVisible] = useState(false);
@@ -13,7 +14,7 @@ const PasswordInput = ({
     return (
         <div>
             {label && <label htmlFor={id} className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                {label}
+                {label}&nbsp;{required && <span className='text-red-600'>*</span>}
             </label>}
             <div className="relative">
                 <input

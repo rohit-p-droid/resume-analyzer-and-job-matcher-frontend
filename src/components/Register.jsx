@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Input, PasswordInput, Toaster } from "./"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { registerSchema } from '../formValidations';
@@ -10,6 +10,8 @@ const Register = () => {
     const [error, setError] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
     const [serverValidationErrors, setServerValidationErrors] = useState({});
+
+    const navigate = useNavigate();
 
     const {register, handleSubmit, formState: {errors}} = useForm({
         resolver: yupResolver(registerSchema)
@@ -27,15 +29,16 @@ const Register = () => {
             })
             
             if(res.statusCode == 400) {
+                setError(res.message);
                 setServerValidationErrors(res.errors);
             }
 
             if(res.statusCode == 201) {
-                //do something
                 setSuccessMessage(res.message);
+                navigate("/login");
             }
         } catch (error) {            
-            setError(error.message);            
+            setError(error.message);        
         }
     }
 
