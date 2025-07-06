@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { Header } from "./components";
+import { Footer, Header } from "./components";
 import { useSelector } from "react-redux"
 import { useEffect } from "react";
 
@@ -12,10 +12,15 @@ function App() {
   }, [theme])
   return (
     <>
-      <div>
-        <Header>
-          <Outlet />
-        </Header>
+            <div className="flex flex-col min-h-screen">
+        <div className="flex-grow">
+          <Header>
+            <Outlet />
+          </Header>
+        </div>
+        <footer className="bg-gray-800 dark:text-white">
+          <Footer />
+        </footer>
       </div>
     </>
   )

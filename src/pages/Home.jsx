@@ -1,12 +1,14 @@
 import React from 'react'
 import { Footer } from '../components'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <div>
       {/* <!-- Hero Section --> */}
       <section className="relative z-10 text-center py-24 px-6 flex flex-col items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-100/20 via-transparent to-transparent dark:from-blue-900/20"></div>
+        <div className="inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-100/20 via-transparent to-transparent dark:from-blue-900/20"></div>
 
         <h2 className="text-5xl font-extrabold mb-6 leading-tight tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
           Land Your Dream Job with AI
@@ -14,9 +16,9 @@ const Home = () => {
         <p className="text-lg max-w-xl mx-auto text-gray-600 dark:text-gray-300 mb-10">
           Upload your resume and let AI analyze, score, and match you with the best opportunities.
         </p>
-        <a href="#" className="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-full hover:scale-105 transform transition duration-300 shadow-lg">
+        <Link to="/resume-analyzer" className="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-full hover:scale-105 transform transition duration-300 shadow-lg">
           Get Started
-        </a>
+        </Link>
       </section>
 
       {/* <!-- Features Section --> */}
@@ -45,11 +47,8 @@ const Home = () => {
       <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center">
         <h3 className="text-3xl font-bold mb-4">Ready to Transform Your Career?</h3>
         <p className="mb-8">Let our AI help you craft the perfect resume and land interviews faster.</p>
-        <a href="#" className="px-8 py-3 bg-white text-blue-600 font-semibold rounded-full shadow hover:bg-gray-100 transition">Upload Resume</a>
+        <Link to="/resume-analyzer/upload" className="px-8 py-3 bg-white text-blue-600 font-semibold rounded-full shadow hover:bg-gray-100 transition">Upload Resume</Link>
       </section>
-      
-      {/* <!-- Footer --> */}
-      <Footer/>
     </div>
   )
 }

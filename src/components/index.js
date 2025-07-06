@@ -9,6 +9,9 @@ import AuthLayout from "./AuthLayout";
 import Footer from "./footer/Footer";
 import ResumeDetails from "./ResumeDetails";
 import ResumeUploadBtn from "./ResumeUploadBtn";
+import Logout from "./Logout";
+import ConfirmationPopup from "./ConfirmationPopup";
+import ResumeList from "./ResumeList";
 
 export {
     Input,
@@ -21,5 +24,8 @@ export {
     AuthLayout,
     Footer,
     ResumeDetails,
-    ResumeUploadBtn
+    ResumeUploadBtn,
+    Logout,
+    ConfirmationPopup,
+    ResumeList,
 }

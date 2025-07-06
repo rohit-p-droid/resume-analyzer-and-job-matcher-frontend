@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout, toggleTheme } from '../../reducers';
 import { FaMoon, FaSun } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { apiRequest } from '../../utils/apiRequest';
 
 const Header = ({ children }) => {
@@ -11,18 +11,9 @@ const Header = ({ children }) => {
     const authStatus = useSelector((state) => state.auth.status);
 
     const navigate = useNavigate();
+    const location = useLocation();
 
-    const logoutHandler = async () => {
-        const res = await apiRequest({
-            url: "/auth/logout",
-            method: "POST"
-        });
-
-        if(res.statusCode == 200) {
-            dispatch(logout());
-            navigate("/login");
-        }
-    }
+    const isActive = (path) => location.pathname == path;
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     return (
@@ -36,10 +27,36 @@ const Header = ({ children }) => {
 
                     {/* <!-- Desktop Menu --> */}
                     <nav className="hidden md:flex items-center space-x-6">
-                        <Link to="/" className="hover:text-blue-600 dark:text-white dark:hover:text-blue-400 transition">Home</Link>
-                        <Link to="#" className="hover:text-blue-600 dark:text-white dark:hover:text-blue-400 transition">Features</Link>
-                        <Link to="#" className="hover:text-blue-600 dark:text-white dark:hover:text-blue-400 transition">About</Link>
-                        <Link to="#" className="hover:text-blue-600 dark:text-white dark:hover:text-blue-400 transition">Contact</Link>
+                        <Link
+                            to="/"
+                            className={`hover:text-blue-600 dark:hover:text-blue-400 transition ${isActive("/") ? "font-bold text-blue-600 dark:text-blue-400" : "dark:text-white"
+                                }`}
+                        >
+                            Home
+                        </Link>
+                        {authStatus && (
+                            <Link
+                                to="/resume-analyzer"
+                                className={`hover:text-blue-600 dark:hover:text-blue-400 transition ${isActive("/resume-analyzer") ? "font-bold text-blue-600 dark:text-blue-400" : "dark:text-white"
+                                    }`}
+                            >
+                                Dashboard
+                            </Link>
+                        )}
+                        <Link
+                            to="/about"
+                            className={`hover:text-blue-600 dark:hover:text-blue-400 transition ${isActive("/about") ? "font-bold text-blue-600 dark:text-blue-400" : "dark:text-white"
+                                }`}
+                        >
+                            About
+                        </Link>
+                        <Link
+                            to="/contact"
+                            className={`hover:text-blue-600 dark:hover:text-blue-400 transition ${isActive("/contact") ? "font-bold text-blue-600 dark:text-blue-400" : "dark:text-white"
+                                }`}
+                        >
+                            Contact
+                        </Link>
 
                         {/* <!-- Auth Buttons --> */}
                         {!authStatus ?
@@ -50,7 +67,7 @@ const Header = ({ children }) => {
                             <>
                                 <button
                                     className="px-4 py-1 rounded bg-blue-600 text-white hover:bg-blue-700 transition"
-                                    onClick={logoutHandler}
+                                    onClick={() => navigate("/logout")}
                                 >
                                     Logout
                                 </button>

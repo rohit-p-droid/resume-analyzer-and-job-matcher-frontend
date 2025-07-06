@@ -5,8 +5,8 @@ import App from './App.jsx'
 import { Provider } from 'react-redux'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import store, { persistor } from './store/index.js'
-import { Login, Register, Home, Dashboard, UploadResume } from './pages'
-import { AuthLayout } from './components'
+import { Login, Register, Home, Dashboard, UploadResume, ViewResume, About, Contact } from './pages'
+import { AuthLayout, Logout } from './components'
 import { PersistGate } from 'redux-persist/integration/react'
 
 
@@ -28,6 +28,18 @@ const router = createBrowserRouter([
         element: <Login />
       },
       {
+        path: "logout",
+        element: <Logout />
+      },
+      {
+        path: "about",
+        element: <About />
+      },
+      {
+        path: "contact",
+        element: <Contact />
+      },
+      {
         path: "resume-analyzer",
         element: <AuthLayout />,
         children: [
@@ -37,7 +49,11 @@ const router = createBrowserRouter([
           },
           {
             path: "upload",
-            element: <UploadResume/>
+            element: <UploadResume />
+          },
+          {
+            path: "view/:resumeId",
+            element: <ViewResume />
           }
         ]
       }

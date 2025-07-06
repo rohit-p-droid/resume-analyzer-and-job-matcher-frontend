@@ -1,8 +1,11 @@
 import React from 'react'
+import { ResumeList } from '../components'
 
 const Dashboard = () => {
   return (
-    <div>User Dashboard</div>
+    <div>
+      <ResumeList/>
+    </div>
   )
 }
 
