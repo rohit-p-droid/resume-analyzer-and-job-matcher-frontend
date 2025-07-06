@@ -7,12 +7,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { apiRequest } from '../utils/apiRequest';
 import { useDispatch } from 'react-redux';
 import { login } from '../reducers';
+import { Loader } from './';
 
 const Login = () => {
 
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [serverValidationErrors, setServerValidationErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(loginSchema)
@@ -26,6 +28,7 @@ const Login = () => {
     setServerValidationErrors({});
 
     try {
+      setLoading(true);
       const res = await apiRequest({
         url: "/auth/login",
         method: "POST",
@@ -45,6 +48,8 @@ const Login = () => {
 
     } catch (error) {
       setError(error.message)
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,6 +59,8 @@ const Login = () => {
       {error && <Toaster success={false} message={error} />}
 
       {successMessage && <Toaster success={true} message={successMessage} />}
+
+      {loading && <Loader />}
 
       <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white mb-6">
         Login

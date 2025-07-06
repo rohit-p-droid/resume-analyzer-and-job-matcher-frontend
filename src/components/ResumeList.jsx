@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { apiRequest } from '../utils/apiRequest';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, ConfirmationPopup } from './';
+import { Button, ConfirmationPopup, Loader } from './';
 import { FaTrashAlt } from "react-icons/fa";
 
 const ResumeList = () => {
     const [resumeList, setResumeList] = useState([]);
     const [deleteResumeId, setDeleteResumeId] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
@@ -15,12 +16,20 @@ const ResumeList = () => {
     }, [])
 
     const getResumeList = async () => {
-        // get list of all resumes
-        const res = await apiRequest({
-            url: "/resume/",
-            method: "GET"
-        })
-        setResumeList(res.data);
+        try {
+            setLoading(true);
+            // get list of all resumes
+            const res = await apiRequest({
+                url: "/resume/",
+                method: "GET"
+            })
+            setResumeList(res.data);
+        } catch (error) {
+            // error
+            console.error(error.message);
+        } finally {
+            setLoading(false);
+        }
     }
 
     const deleteResume = async () => {
@@ -34,6 +43,7 @@ const ResumeList = () => {
 
     return (
         <>
+            {loading && <Loader />}
             <div className="max-w-4xl mx-auto">
                 {/* Page Heading */}
                 <div className="flex justify-between items-center m-5">

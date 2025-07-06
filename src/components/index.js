@@ -12,6 +12,7 @@ import ResumeUploadBtn from "./ResumeUploadBtn";
 import Logout from "./Logout";
 import ConfirmationPopup from "./ConfirmationPopup";
 import ResumeList from "./ResumeList";
+import Loader from "./Loader";
 
 export {
     Input,
@@ -28,4 +29,5 @@ export {
     Logout,
     ConfirmationPopup,
     ResumeList,
+    Loader
 }
