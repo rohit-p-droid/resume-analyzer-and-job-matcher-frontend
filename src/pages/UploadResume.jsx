@@ -26,33 +26,40 @@ const UploadResume = () => {
 
     const getResumeDetails = async (file = resumeFile) => {
         if (file) {
-            setLoading(true);
-            const validFileTypes = ['image/png', 'image/jpg', 'image/jpeg'];
-            if (!validFileTypes.includes(file.type)) {
-                setError("Only PNG, JPG, or JPEG files are allowed.");
-                setLoading(false);
-                return;
-            }
-            const formData = new FormData();
-            formData.append('resume', file);
-            const res = await apiRequest({
-                url: "/resume/upload",
-                method: "POST",
-                data: formData
-            })
-            if (res.statusCode == 200) {
-                setLoading(false);
-                if (res.data.valid) {
-                    setResumeDetails(res.data)
-                    setShowResumeDetails(true)
-                    setIsDataSaved(false);
-                } else {
-                    setError(`Invalid resume: ${res.data.wrong_resume}`);
+            try {
+                setLoading(true);
+                const validFileTypes = ['image/png', 'image/jpg', 'image/jpeg'];
+                if (!validFileTypes.includes(file.type)) {
+                    setError("Only PNG, JPG, or JPEG files are allowed.");
+                    setLoading(false);
+                    return;
                 }
-                return;
+                const formData = new FormData();
+                formData.append('resume', file);
+                const res = await apiRequest({
+                    url: "/resume/upload",
+                    method: "POST",
+                    data: formData
+                })
+                if (res.statusCode == 200) {
+                    setLoading(false);
+                    if (res.data.valid) {
+                        setResumeDetails(res.data)
+                        setShowResumeDetails(true)
+                        setIsDataSaved(false);
+                    } else {
+                        setError(`Invalid resume: ${res.data.wrong_resume}`);
+                    }
+                    return;
+                }
+                setError(res.message)
+                setLoading(false);
+            } catch (error) {
+                console.error(error.message);
+                setLoading(false);
+            } finally {
+                setLoading(false);
             }
-            setError(res.message)
-            setLoading(false);
         }
     }
 
